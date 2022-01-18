@@ -66,7 +66,7 @@ func (p *Plugin) Init(cfg config.Configurer) error {
 	return nil
 }
 
-func (p *Plugin) Middleware(next http.Handler) http.Handler {
+func (p *Plugin) Middleware(next http.Handler) http.Handler { //nolint:gocognit
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		txn := p.app.StartTransaction(r.RequestURI)
 		defer txn.End()
