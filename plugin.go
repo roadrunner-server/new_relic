@@ -12,11 +12,13 @@ import (
 )
 
 const (
-	pluginName             string = "new_relic"
-	path                   string = "http.new_relic"
-	rrNewRelicKey          string = "Rr_newrelic"
-	rrNewRelicErr          string = "Rr_newrelic_error"
-	newRelicTransactionKey string = "transaction_name"
+	pluginName                string = "new_relic"
+	path                      string = "http.new_relic"
+	rrNewRelicKey             string = "Rr_newrelic"
+	rrNewRelicErr             string = "Rr_newrelic_error"
+	newRelicTransactionKey    string = "transaction_name"
+	newRelicIgnoreTransaction string = "Rr_newrelic_ignore"
+	trueStr                   string = "true"
 )
 
 type Plugin struct {
@@ -66,7 +68,7 @@ func (p *Plugin) Init(cfg config.Configurer) error {
 	return nil
 }
 
-func (p *Plugin) Middleware(next http.Handler) http.Handler { //nolint:gocognit
+func (p *Plugin) Middleware(next http.Handler) http.Handler { //nolint:gocognit,gocyclo
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		txn := p.app.StartTransaction(r.RequestURI)
 		defer txn.End()
@@ -85,7 +87,23 @@ func (p *Plugin) Middleware(next http.Handler) http.Handler { //nolint:gocognit
 			p.putWriter(rrWriter)
 		}()
 
-		// handle error
+		// ignore transaction if the rr_newrelic_ignore key exists and equal to true
+		if val := rrWriter.hdrToSend[newRelicIgnoreTransaction]; len(val) > 0 && val[0] == trueStr {
+			delete(rrWriter.hdrToSend, rrNewRelicKey)
+			delete(rrWriter.hdrToSend, rrNewRelicErr)
+			delete(rrWriter.hdrToSend, newRelicIgnoreTransaction)
+
+			for k := range rrWriter.hdrToSend {
+				for kk := range rrWriter.hdrToSend[k] {
+					w.Header().Add(k, rrWriter.hdrToSend[k][kk])
+				}
+			}
+
+			txn.Ignore()
+			return
+		}
+
+		// check for error error
 		if len(rrWriter.hdrToSend[rrNewRelicErr]) > 0 {
 			err := handleErr(rrWriter.hdrToSend[rrNewRelicErr])
 			txn.NoticeError(err)
@@ -93,6 +111,7 @@ func (p *Plugin) Middleware(next http.Handler) http.Handler { //nolint:gocognit
 			// to be sure
 			delete(rrWriter.hdrToSend, rrNewRelicKey)
 			delete(rrWriter.hdrToSend, rrNewRelicErr)
+			delete(rrWriter.hdrToSend, newRelicIgnoreTransaction)
 
 			for k := range rrWriter.hdrToSend {
 				for kk := range rrWriter.hdrToSend[k] {
@@ -103,11 +122,12 @@ func (p *Plugin) Middleware(next http.Handler) http.Handler { //nolint:gocognit
 			return
 		}
 
-		// no error, general case
+		// no errors, general case
 		hdr := rrWriter.hdrToSend[rrNewRelicKey]
 		if len(hdr) == 0 {
 			// to be sure
 			delete(rrWriter.hdrToSend, rrNewRelicKey)
+			delete(rrWriter.hdrToSend, newRelicIgnoreTransaction)
 
 			for k := range rrWriter.hdrToSend {
 				for kk := range rrWriter.hdrToSend[k] {
@@ -135,6 +155,7 @@ func (p *Plugin) Middleware(next http.Handler) http.Handler { //nolint:gocognit
 
 		// delete sensitive information
 		delete(rrWriter.hdrToSend, rrNewRelicKey)
+		delete(rrWriter.hdrToSend, newRelicIgnoreTransaction)
 
 		// send original data
 		for k := range rrWriter.hdrToSend {
