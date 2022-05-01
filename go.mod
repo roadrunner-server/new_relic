@@ -4,9 +4,9 @@ go 1.18
 
 require (
 	github.com/newrelic/go-agent/v3 v3.15.2
-	github.com/roadrunner-server/api/v2 v2.14.0
+	github.com/roadrunner-server/api/v2 v2.17.0
 	github.com/roadrunner-server/errors v1.1.2
-	github.com/roadrunner-server/sdk/v2 v2.13.3
+	github.com/roadrunner-server/sdk/v2 v2.14.0
 	github.com/stretchr/testify v1.7.1
 )
 
@@ -16,9 +16,9 @@ require (
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/roadrunner-server/tcplisten v1.1.2 // indirect
 	golang.org/x/net v0.0.0-20220425223048-2871e0cb64e4 // indirect
-	golang.org/x/sys v0.0.0-20220429121018-84afa8d3f7b3 // indirect
+	golang.org/x/sys v0.0.0-20220429233432-b5fbb4746d32 // indirect
 	golang.org/x/text v0.3.7 // indirect
-	google.golang.org/genproto v0.0.0-20220426171045-31bebdecfb46 // indirect
+	google.golang.org/genproto v0.0.0-20220429170224-98d788798c3e // indirect
 	google.golang.org/grpc v1.46.0 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
