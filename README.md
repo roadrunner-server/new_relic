@@ -1,4 +1,7 @@
-RRv2 NewRelic HTTP middleware
+### USE OTEL HTTP MIDDLEWARE [LINK](https://github.com/roadrunner-server/otel)
+
+### RRv2 NewRelic HTTP middleware [DEPRECATED]
+
 
 - ✏️ **[BETA]** Support for the New Relic observability platform. Sample of the client library might be
   found [here](https://github.com/arku31/roadrunner-newrelic). (Thanks @arku31)
