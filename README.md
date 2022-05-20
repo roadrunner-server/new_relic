@@ -1,4 +1,4 @@
-### USE OTEL HTTP MIDDLEWARE [LINK](https://github.com/roadrunner-server/otel)
+### USE OpenTelemetry HTTP MIDDLEWARE [LINK](https://github.com/roadrunner-server/otel)
 
 ### RRv2 NewRelic HTTP middleware [DEPRECATED]
 
