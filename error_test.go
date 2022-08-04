@@ -13,7 +13,7 @@ func TestError(t *testing.T) {
 	require.Equal(t, newrelic.Error{
 		Message: "world",
 		Class:   "foo",
-		Attributes: map[string]interface{}{
+		Attributes: map[string]any{
 			"attributes": "bar",
 		},
 		Stack: nil,
@@ -24,7 +24,7 @@ func TestError(t *testing.T) {
 	require.Equal(t, newrelic.Error{
 		Message: "",
 		Class:   "foo",
-		Attributes: map[string]interface{}{
+		Attributes: map[string]any{
 			"attributes": "bar",
 		},
 		Stack: nil,
@@ -35,7 +35,7 @@ func TestError(t *testing.T) {
 	require.Equal(t, newrelic.Error{
 		Message: "world",
 		Class:   "",
-		Attributes: map[string]interface{}{
+		Attributes: map[string]any{
 			"attributes": "bar",
 		},
 		Stack: nil,
@@ -73,7 +73,7 @@ func TestError(t *testing.T) {
 	require.Equal(t, newrelic.Error{
 		Message: "что",
 		Class:   "это",
-		Attributes: map[string]interface{}{
+		Attributes: map[string]any{
 			"attributes": "за язык",
 		},
 		Stack: nil,

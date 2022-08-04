@@ -19,7 +19,6 @@ Error headers format:
 message:foo
 class:bar
 attributes:baz
-
 */
 func handleErr(headers []string) error {
 	nrErr := newrelic.Error{}
@@ -32,7 +31,7 @@ func handleErr(headers []string) error {
 		case strings.EqualFold(utils.AsString(key), class):
 			nrErr.Class = utils.AsString(value)
 		case strings.EqualFold(utils.AsString(key), attributes):
-			nrErr.Attributes = map[string]interface{}{
+			nrErr.Attributes = map[string]any{
 				"attributes": utils.AsString(value),
 			}
 		}

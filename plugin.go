@@ -55,7 +55,7 @@ func (p *Plugin) Init(cfg config.Configurer) error {
 	}
 
 	p.writersPool = sync.Pool{
-		New: func() interface{} {
+		New: func() any {
 			wr := new(writer)
 			wr.code = -1
 			wr.data = nil
