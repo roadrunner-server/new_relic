@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/newrelic/go-agent/v3 v3.18.0
-	github.com/roadrunner-server/api/v2 v2.20.0
+	github.com/roadrunner-server/api/v2 v2.20.1
 	github.com/roadrunner-server/errors v1.1.2
 	github.com/roadrunner-server/sdk/v2 v2.18.2
 	github.com/stretchr/testify v1.8.0
