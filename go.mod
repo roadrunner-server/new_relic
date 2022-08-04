@@ -1,6 +1,6 @@
 module github.com/roadrunner-server/new_relic/v2
 
-go 1.18
+go 1.19
 
 require (
 	github.com/newrelic/go-agent/v3 v3.18.0
