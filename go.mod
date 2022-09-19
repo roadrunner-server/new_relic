@@ -3,7 +3,7 @@ module github.com/roadrunner-server/new_relic/v2
 go 1.19
 
 require (
-	github.com/newrelic/go-agent/v3 v3.19.0
+	github.com/newrelic/go-agent/v3 v3.19.1
 	github.com/roadrunner-server/api/v2 v2.23.0
 	github.com/roadrunner-server/errors v1.2.0
 	github.com/roadrunner-server/sdk/v2 v2.19.0
